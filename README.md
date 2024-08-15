@@ -1,66 +1,36 @@
-## Foundry
+# TinyGambling
+A small gambling type game
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Game Rules
 
-Foundry consists of:
+This game runs every 32 blocks on the blockchain. At the end of each game, three random numbers are generated and summed.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### Betting Options
 
-## Documentation
+1. **Odd**: Win if the sum of the three numbers is odd. Payout ratio: 1:1.95 (including original stake)
+2. **Even**: Win if the sum of the three numbers is even. Payout ratio: 1:1.95 (including original stake)
+3. **Big**: Win if the sum is between 14 and 27 (inclusive). Payout ratio: 1:1.95 (including original stake)
+4. **Small**: Win if the sum is between 0 and 13 (inclusive). Payout ratio: 1:1.95 (including original stake)
 
-https://book.getfoundry.sh/
+## Reward System
 
-## Usage
+To enhance player engagement and retention, the game includes the following reward features:
 
-### Build
+1. **Loyalty Points**: Players earn points for each bet placed, regardless of the outcome.
 
-```shell
-$ forge build
-```
+2. **Tiered Rewards**: Players can progress through different tiers based on their activity level and total bets placed.
 
-### Test
+3. **Free Bets**: Players receive occasional free bets, especially when reaching new tiers or on special occasions.
 
-```shell
-$ forge test
-```
+4. **Referral Bonuses**: Players can earn rewards for referring new users to the game.
 
-### Format
+5. **Progressive Jackpot**: A small percentage of each bet contributes to a progressive jackpot, which can be won under specific conditions.
 
-```shell
-$ forge fmt
-```
 
-### Gas Snapshots
+## Important Notes
 
-```shell
-$ forge snapshot
-```
+- All transactions and game results are recorded on the blockchain, ensuring transparency and fairness.
+- Players are encouraged to gamble responsibly and within their means.
+- The smart contract includes measures to prevent cheating and ensure random number generation integrity.
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+For detailed technical implementation and smart contract specifics, please refer to the source code and documentation.
