@@ -89,6 +89,10 @@ contract TinyGambling is Initializable,OwnableUpgradeable,ReentrancyGuardUpgrade
         _;
     }
 
+    constructor () {
+        _disableInitializers();
+    }
+
     function initialize(address initialOwner, address _betteToken, address _luckyDrawer) public initializer {
         __Ownable_init(initialOwner);
         betteToken = IERC20(_betteToken);
