@@ -37,14 +37,21 @@ contract TinyGambling is Initializable,OwnableUpgradeable,ReentrancyGuardUpgrade
         //积分
         uint256  points;
 
+        //已获取奖金（包括游戏赢取和激励）
+        uint256 hasClaimes;
+
+        //游戏次数
+        uint256 times;
+
+        uint256 totalBetAmount; // 总下注金额
+
+        uint256 winCount; // 获胜次数
+
         //等级
         uint16 level;
 
         //剩余免费下注次数
         uint16 freeChances;
-
-        //已获取奖金（包括游戏赢取和激励）
-        uint256 hasClaimes;
     }
 
     mapping(address=>Profile) public profiles;
@@ -118,7 +125,29 @@ contract TinyGambling is Initializable,OwnableUpgradeable,ReentrancyGuardUpgrade
     }
 
     function createBettor(uint256 _amount, uint8 _betType) external returns (bool) {
+        require(_betType >= uint8(BettorType.Big) && _betType <= uint8(BettorType.Double), "createBettor: invalid bettor type, please bette repeat");
 
+        require(_amount >= 10 ** betteTokenDecimal, "createBettor: bette amount must more than ten");
+
+        require(betteToken.balanceOf(msg.sender) >= _amount, "createBettor: bettor account balance not enough");
+
+        require(roundGameInfo[hgmGlobalId].endBlock >= block.number, "createBettor: current round game is over, wait for next round game");
+
+        betteToken.safeTransferFrom(msg.sender, address(this), _amount);
+
+
+    GuessBettor memory guesscreate = GuessBetter ({
+            account: msg.sender,
+            value: _amount,
+            hgmId: hgmGlobalId,
+            betType: _betType,
+            hasReward: false,
+            isReward: false,
+            reWardVale: 0
+        });
+
+        guessBettorList.push(guesscreate);
+        emit GuessBetterCreate(_msgSender(),_amount,_betType);
         return true;
     }
 }
